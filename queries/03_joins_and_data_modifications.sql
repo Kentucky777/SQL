@@ -208,7 +208,7 @@ begin;
 
 update ticket
 set price = base_rate * 0.1
-where flight_id = 26091001;
+where flight_id = 26091001
 returning
     ticket_id,
     flight_id,
@@ -230,13 +230,14 @@ rollback;
 
 begin;
 
-update ticket
+update ticket t
 set service_price = 500
-where passenger_id in (select passenger_id from passenger where category_name = 'Пенсионер')
-and
-flight_id in (select f.flight_id from flight f 
-join airplane a on a.airplane_id = f.airplane_id
-where brand = 'boeing')
+from passenger p, flight f, airplane a
+where t.passenger_id = p.passenger_id
+and t.flight_id = f.flight_id
+and f.airplane_id = a.airplane_id
+and p.category_name = 'Пенсионер'
+and a.brand = 'Boeing'
 returning
     t.ticket_id,
     p.full_name,
@@ -257,8 +258,8 @@ rollback;
 
 begin;
 
-delete from passenger
-where not exists(select 1 from ticket where ticket.passenger_id = passenger.passenger_id)
+delete from passenger p
+where not exists(select 1 from ticket where ticket.passenger_id = p.passenger_id)
 returning
     p.passenger_id,
     p.full_name,

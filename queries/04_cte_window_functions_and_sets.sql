@@ -143,7 +143,7 @@ join flight f on f.flight_id = t.flight_id
 join route r on r.route_id = f.route_id
 where r.distance_km > 4000 and p.category_name = 'Ребенок'
 )
-update ticket
+update ticket t
 set service_price = 2500, actual_rate = actual_rate - 2500
 where ticket_id in (select ticket_id from child_ticket)
 
@@ -172,7 +172,7 @@ with useless as(
 select distinct flight_id from history
 where status_name = 'Отменен' and status_time between '2026-09-01 00:00:00' and '2026-09-30 23:59:59'
 )
-delete from history
+delete from history h
 where flight_id in (select flight_id from useless)
 returning
     h.history_id,
