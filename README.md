@@ -13,7 +13,7 @@
 
 ## 🛠 Стек технологий
 * **СУБД:** PostgreSQL 15+
-* **Инструменты:** DpgAdmin, Git
+* **Инструменты:** pgAdmin, Git
 * **Язык запросов:** SQL (DDL, DML, CTE, Window Functions, Aggregate Functions)
 
 ---
